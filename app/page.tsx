@@ -76,6 +76,9 @@ const services = [
   },
 ];
 
+/* ---------------------------------------
+   SKILLS
+--------------------------------------- */
 const skills = [
   { name: "Digital Marketing Strategy", level: 95 },
   { name: "Performance Marketing", level: 93 },
@@ -88,33 +91,33 @@ const skills = [
 ];
 
 /* ---------------------------------------
-   REAL WORK EXPERIENCE
+   EXPERIENCE
 --------------------------------------- */
 const experiences = [
   {
     role: "Regional Digital Manager",
     company: "MCIX Thailand Agency",
-    period: "Feb 2025 – Dec 2025",
+    period: "Feb 2025 – Present",
     description:
-      "Overseeing digital strategy, campaign execution, and performance optimization across multiple markets. Leading cross-functional teams to drive innovation and achieve business objectives.",
+      "Overseeing digital strategy, media execution, and performance optimization across multiple markets in SEA.",
     achievements: [
-      "Developed and executed high-impact digital marketing strategies",
-      "Managed multi-million-dollar budgets across various digital platforms",
-      "Implemented advanced analytics to improve campaign tracking and ROI measurement",
-      "Led a team of digital marketing professionals to deliver exceptional results",
+      "Developed and executed high-impact digital marketing strategies.",
+      "Managed multi-million-dollar budgets across various digital platforms.",
+      "Implemented advanced analytics to improve campaign tracking and ROI measurement.",
+      "Led a team of digital marketing professionals to deliver exceptional results.",
     ],
   },
   {
     role: "Senior Operation Manager",
-    company: "Humology",
+    company: "Homology",
     period: "Nov 2019 – Mar 2022",
     description:
-      "Managed team deliverables, established optimization approaches, and ensured high standards of campaign performance. Oversaw daily operations and team coordination.",
+      "Managed team deliverables, established optimization approaches, and ensured high standards of campaign performance.",
     achievements: [
-      "Streamlined operational processes reducing turnaround time by 30%",
-      "Developed and implemented new campaign strategies",
-      "Improved client satisfaction scores by 40%",
-      "Successfully managed 20+ concurrent projects",
+      "Streamlined operational processes reducing turnaround time by 30%.",
+      "Developed and implemented new campaign strategies.",
+      "Improved client satisfaction scores by 40%.",
+      "Successfully managed 20+ concurrent projects.",
     ],
   },
   {
@@ -122,12 +125,12 @@ const experiences = [
     company: "Passion Point Media Ltd",
     period: "Jul 2017 – Apr 2019",
     description:
-      "Developed media strategies, managed client relationships, and executed multi-platform advertising campaigns with a strong focus on ROI.",
+      "Developed media strategies, managed client relationships, and executed multi-platform advertising campaigns.",
     achievements: [
-      "Achieved 150% ROI improvement for key clients",
-      "Managed digital media budgets of $300,000+",
-      "Introduced new audience and bidding strategies to scale efficiently",
-      "Developed automated reporting systems for faster decision-making",
+      "Achieved 150% ROI improvement for key clients.",
+      "Managed digital media budgets of $300,000+.",
+      "Introduced new targeting strategies.",
+      "Developed automated reporting systems.",
     ],
   },
   {
@@ -135,16 +138,19 @@ const experiences = [
     company: "City Mart Holding Ltd",
     period: "Feb 2016 – May 2017",
     description:
-      "Managed digital marketing initiatives to enhance brand visibility, optimize campaigns, and grow audience engagement across multiple online platforms.",
+      "Managed digital marketing strategies to enhance brand visibility and drive engagement.",
     achievements: [
-      "Increased social media engagement by 200%",
-      "Implemented successful email marketing campaigns",
-      "Improved website traffic by 75%",
-      "Established digital marketing best practices within the team",
+      "Increased social media engagement by 200%.",
+      "Implemented successful email marketing campaigns.",
+      "Improved website traffic by 75%.",
+      "Established digital marketing best practices.",
     ],
   },
 ];
 
+/* ---------------------------------------
+   EDUCATION & CERTIFICATIONS
+--------------------------------------- */
 const education = {
   degree: "B.Sc in Physics",
   university: "Dagon University",
@@ -180,17 +186,23 @@ const certifications = [
    PAGE COMPONENT
 --------------------------------------- */
 export default function HomePage() {
-  // Smooth scroll
+  /* Smooth scroll */
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   /* CONTACT FORM STATE */
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
+
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (
@@ -218,12 +230,25 @@ export default function HomePage() {
         body: JSON.stringify(form),
       });
 
-      if (!res.ok) throw new Error();
+      let data: any = null;
+      try {
+        data = await res.json();
+      } catch {
+        // ignore json parse error
+      }
+
+      if (!res.ok) {
+        setStatus("error");
+        setError(
+          data?.error || "Failed to send message. Please try again later."
+        );
+        return;
+      }
 
       setStatus("success");
       setForm({ name: "", email: "", message: "" });
     } catch (err) {
-      console.error(err);
+      console.error("Contact form error:", err);
       setStatus("error");
       setError("Something went wrong. Please try again.");
     }
@@ -232,6 +257,7 @@ export default function HomePage() {
   const disabled =
     status === "submitting" || !form.name || !form.email || !form.message;
 
+  /* RENDER */
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50">
       {/* Background Glow */}
@@ -244,7 +270,7 @@ export default function HomePage() {
             onClick={() => scrollTo("top")}
             className="flex items-center gap-2 font-semibold tracking-tight"
           >
-            {/* Logo */}
+            {/* Logo from /public/logo.png */}
             <Image
               src="/logo.png"
               alt="Ye Htet Aung Logo"
@@ -283,7 +309,7 @@ export default function HomePage() {
         id="top"
         className="relative z-10 mx-auto max-w-6xl flex flex-col gap-16 px-4 py-12"
       >
-        {/* ABOUT */}
+        {/* ABOUT / HERO */}
         <section id="about" className="pt-4">
           <div className="flex flex-col items-start gap-10 md:flex-row md:items-center">
             {/* LEFT: TEXT */}
@@ -332,7 +358,7 @@ export default function HomePage() {
                 <div className="flex flex-col items-center gap-4">
                   <div className="relative h-44 w-44 rounded-full overflow-hidden border-4 border-sky-400 shadow-lg shadow-sky-900/60">
                     <Image
-                      src="/yha_photo.png"
+                      src="/yehtet.jpg"
                       alt="Ye Htet Aung"
                       fill
                       className="object-cover"
@@ -436,10 +462,7 @@ export default function HomePage() {
                   {exp.description}
                 </p>
 
-                <p className="mt-3 text-xs font-semibold text-emerald-300">
-                  Key Achievements:
-                </p>
-                <ul className="mt-1 space-y-1 text-xs text-slate-400">
+                <ul className="mt-3 space-y-1 text-xs text-slate-400">
                   {exp.achievements.map((a) => (
                     <li key={a}>• {a}</li>
                   ))}
@@ -564,10 +587,14 @@ export default function HomePage() {
                 ></textarea>
               </div>
 
-              {/* ERRORS */}
-              {error && <p className="text-xs text-red-400">{error}</p>}
+              {/* ERROR MESSAGE */}
+              {error && (
+                <p className="text-xs text-red-400 whitespace-pre-line">
+                  {error}
+                </p>
+              )}
 
-              {/* SUCCESS */}
+              {/* SUCCESS MESSAGE */}
               {status === "success" && (
                 <p className="text-xs text-emerald-400">
                   Message sent successfully! I&apos;ll get back to you soon.

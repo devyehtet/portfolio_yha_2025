@@ -14,56 +14,41 @@ export async function POST(req: Request) {
       );
     }
 
-    // Debug environment variables
-    console.log("ENV CHECK →", {
-      SMTP_HOST: process.env.SMTP_HOST,
-      SMTP_PORT: process.env.SMTP_PORT,
-      SMTP_USER: process.env.SMTP_USER,
-      SMTP_PASS: process.env.SMTP_PASS ? "LOADED" : "MISSING",
-      CONTACT_EMAIL: process.env.CONTACT_EMAIL,
-    });
-
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-      return NextResponse.json(
-        { error: "SMTP credentials missing" },
-        { status: 500 }
-      );
-    }
-
+    // 🔥 DIRECT SMTP CONFIG (TEMPORARY – DO NOT COMMIT REAL CREDENTIALS)
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.gmail.com",
-      port: Number(process.env.SMTP_PORT || 465),
-      secure: true,
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // SSL
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: "info@yehtet.com",        // 👈 your email
+        pass: "yuoadoyeefcjgzvw", // 👈 your 16-char Gmail app password
       },
     });
 
-    // TypeScript fix → add (err: any)
+    // Optional: verify connection
     await transporter.verify().catch((err: any) => {
       console.error("SMTP Verify Error:", err);
       throw err;
     });
 
     await transporter.sendMail({
-      from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
-      to: process.env.CONTACT_EMAIL || process.env.SMTP_USER,
+      from: `"Portfolio Contact" <info@yehtet.com>`,
+      to: "info@yehtet.com", // where you receive the message
       subject: `New message from ${name}`,
       replyTo: email,
-      html: `
-        <h2>New Contact Form Message</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
-      `,
       text: `
 Name: ${name}
 Email: ${email}
 
 Message:
 ${message}
+      `,
+      html: `
+        <h2>New Contact Form Message</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, "<br>")}</p>
       `,
     });
 
