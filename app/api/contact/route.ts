@@ -14,9 +14,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // -----------------------------
-    // ENV DEBUG LOG (you will see this in terminal)
-    // -----------------------------
+    // Debug environment variables
     console.log("ENV CHECK →", {
       SMTP_HOST: process.env.SMTP_HOST,
       SMTP_PORT: process.env.SMTP_PORT,
@@ -25,7 +23,6 @@ export async function POST(req: Request) {
       CONTACT_EMAIL: process.env.CONTACT_EMAIL,
     });
 
-    // If env missing → stop here
     if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
       return NextResponse.json(
         { error: "SMTP credentials missing" },
@@ -33,28 +30,22 @@ export async function POST(req: Request) {
       );
     }
 
-    // -----------------------------
-    // TRANSPORTER (Gmail / Workspace)
-    // -----------------------------
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.gmail.com",
       port: Number(process.env.SMTP_PORT || 465),
-      secure: true, // Gmail requires secure SSL on port 465
+      secure: true,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
     });
 
-    // Verify SMTP connection
-    await transporter.verify().catch((err) => {
+    // TypeScript fix → add (err: any)
+    await transporter.verify().catch((err: any) => {
       console.error("SMTP Verify Error:", err);
       throw err;
     });
 
-    // -----------------------------
-    // SEND EMAIL
-    // -----------------------------
     await transporter.sendMail({
       from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_EMAIL || process.env.SMTP_USER,
