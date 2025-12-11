@@ -14,21 +14,29 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create SMTP transporter
+    // Debug: log host/port on server (you'll see this in the terminal)
+    console.log("SMTP_HOST:", process.env.SMTP_HOST);
+    console.log("SMTP_PORT:", process.env.SMTP_PORT);
+
+    const host = process.env.SMTP_HOST || "smtp.gmail.com";
+    const port = Number(process.env.SMTP_PORT || 465);
+
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT || 465),
-      secure: true, // true for port 465 (Gmail SSL)
+      host,
+      port,
+      secure: port === 465, // true for 465, false for 587
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
     });
 
-    // Send the email
+    // Optional: verify connection (good for debugging)
+    await transporter.verify();
+
     await transporter.sendMail({
       from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
-      to: process.env.CONTACT_EMAIL,
+      to: process.env.CONTACT_EMAIL || process.env.SMTP_USER,
       subject: `New message from ${name}`,
       replyTo: email,
       text: `
