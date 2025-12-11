@@ -540,7 +540,7 @@ export default function HomePage() {
                 <p className="text-xs font-semibold text-slate-400 uppercase">
                   Phone
                 </p>
-                <p>+66 (0) 941-567-809</p>
+                <p>+66 (0) 947-206-085</p>
               </div>
             </div>
 
