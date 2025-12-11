@@ -14,21 +14,23 @@ export async function POST(req: Request) {
       );
     }
 
+    // Create SMTP transporter
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: Number(process.env.SMTP_PORT) === 465,
+      port: Number(process.env.SMTP_PORT || 465),
+      secure: true, // true for port 465 (Gmail SSL)
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
     });
 
+    // Send the email
     await transporter.sendMail({
       from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
       to: process.env.CONTACT_EMAIL,
-      replyTo: email,
       subject: `New message from ${name}`,
+      replyTo: email,
       text: `
 Name: ${name}
 Email: ${email}
@@ -37,15 +39,16 @@ Message:
 ${message}
       `,
       html: `
-<b>Name:</b> ${name}<br/>
-<b>Email:</b> ${email}<br/><br/>
-<b>Message:</b><br/>${message.replace(/\n/g, "<br/>")}
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, "<br/>")}</p>
       `,
     });
 
     return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("Error sending email:", err);
+  } catch (error) {
+    console.error("Error sending email:", error);
     return NextResponse.json(
       { error: "Failed to send message" },
       { status: 500 }
