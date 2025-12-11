@@ -358,7 +358,7 @@ export default function HomePage() {
                 <div className="flex flex-col items-center gap-4">
                   <div className="relative h-44 w-44 rounded-full overflow-hidden border-4 border-sky-400 shadow-lg shadow-sky-900/60">
                     <Image
-                      src="/yehtet.jpg"
+                      src="/yha_photo.jpg"
                       alt="Ye Htet Aung"
                       fill
                       className="object-cover"
