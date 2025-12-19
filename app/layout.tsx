@@ -1,6 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Ye Htet Aung | Digital Marketing Manager",
@@ -14,7 +15,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+      <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Google Analytics (GA4) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-9BH46V9VMG"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-script" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-9BH46V9VMG');
+          `}
+        </Script>
+      </head>
+
       <body className="bg-slate-950 text-slate-100 antialiased">
         {children}
       </body>
