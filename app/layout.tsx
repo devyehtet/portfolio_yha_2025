@@ -20,6 +20,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+
+        {/*Event snippet for Contact conversion page */ } 
+<script>
+  gtag('event', 'conversion', {'send_to': 'AW-17352985815/AUcnCL_SstgbENeZxtJA'});
+</script>
+
+
+{/* Event snippet for Page view (2) conversion page */}
+<script>
+  gtag('event', 'conversion', {'send_to': 'AW-17352985815/VWLbCMLSstgbENeZxtJA'});
+</script>
+
+
+
         {/* Google Analytics (GA4) */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
