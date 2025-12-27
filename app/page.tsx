@@ -2,6 +2,7 @@
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
+import { sendLeadEvent } from "./components/MetaLeadTracker";
 
 /* ---------------------------------------
    NAVIGATION ITEMS
