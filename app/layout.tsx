@@ -9,20 +9,20 @@ export const metadata: Metadata = {
     "Digital Marketing Manager & Performance Marketing Expert specializing in SEO, PPC, Social Media, and Data-Driven Campaign Optimization.",
 };
 
+const GA_ID = "G-9BH46V9VMG";
+const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID; // ✅ from env
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // ✅ FIX: define pixelId (from env)
-  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Google Analytics (GA4) */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-9BH46V9VMG"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"
         />
         <Script id="ga4-script" strategy="afterInteractive">
@@ -30,18 +30,18 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-9BH46V9VMG');
+            gtag('config', '${GA_ID}');
           `}
         </Script>
 
-        {/* Facebook domain verification */}
+        {/* Domain verification */}
         <meta
           name="facebook-domain-verification"
           content="pn466ibwvkay4x78bj4l80legtjhej"
         />
 
         {/* Meta Pixel */}
-        {pixelId ? (
+        {PIXEL_ID ? (
           <>
             <Script id="meta-pixel" strategy="afterInteractive">
               {`
@@ -53,18 +53,17 @@ export default function RootLayout({
                 t.src=v;s=b.getElementsByTagName(e)[0];
                 s.parentNode.insertBefore(t,s)}(window, document,'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '${pixelId}');
+                fbq('init', '${PIXEL_ID}');
                 fbq('track', 'PageView');
               `}
             </Script>
 
             <noscript>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 height="1"
                 width="1"
                 style={{ display: "none" }}
-                src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+                src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
                 alt=""
               />
             </noscript>
@@ -72,9 +71,7 @@ export default function RootLayout({
         ) : null}
       </head>
 
-      <body className="bg-slate-950 text-slate-100 antialiased">
-        {children}
-      </body>
+      <body className="bg-slate-950 text-slate-100 antialiased">{children}</body>
     </html>
   );
 }
