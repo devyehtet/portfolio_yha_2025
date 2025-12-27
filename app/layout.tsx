@@ -30,10 +30,7 @@ export default function RootLayout({
             gtag('config', 'G-9BH46V9VMG');
           `}
         </Script>
-
-        <meta name="facebook-domain-verification" content="pn466ibwvkay4x78bj4l80legtjhej" />
-    
-      </head>
+              </head>
 
       <body className="bg-slate-950 text-slate-100 antialiased">
         {children}
