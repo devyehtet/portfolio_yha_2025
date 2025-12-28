@@ -9,59 +9,54 @@ export const metadata: Metadata = {
     "Digital Marketing Manager & Performance Marketing Expert specializing in SEO, PPC, Social Media, and Data-Driven Campaign Optimization.",
 };
 
-// ✅ Put these in .env (recommended)
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-9BH46V9VMG";
-const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || ""; // ex: 928969039556719
+const GA_ID = "G-9BH46V9VMG";
+const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Facebook Domain Verification */}
+        {/* GA4 */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
+
+        {/* Domain verification */}
         <meta
           name="facebook-domain-verification"
           content="pn466ibwvkay4x78bj4l80legtjhej"
         />
 
-        {/* GA4 */}
-        {GA_ID ? (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4-init" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_ID}', { send_page_view: true });
-              `}
-            </Script>
-          </>
-        ) : null}
-
         {/* Meta Pixel */}
-
-        <meta name="pixel-debug" content="pixel-enabled" />
-
         {PIXEL_ID ? (
           <>
-            <Script id="meta-pixel" strategy="afterInteractive">
-              {`
-                !function(f,b,e,v,n,t,s)
-                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s)}(window, document,'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', '${PIXEL_ID}');
-                fbq('track', 'PageView');
-              `}
-            </Script>
-
+            <Script
+              id="meta-pixel"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  !function(f,b,e,v,n,t,s)
+                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                  n.queue=[];t=b.createElement(e);t.async=!0;
+                  t.src=v;s=b.getElementsByTagName(e)[0];
+                  s.parentNode.insertBefore(t,s)}(window, document,'script',
+                  'https://connect.facebook.net/en_US/fbevents.js');
+                  fbq('init', '${PIXEL_ID}');
+                  fbq('track', 'PageView');
+                `,
+              }}
+            />
             <noscript>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -76,9 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ) : null}
       </head>
 
-      <body className="bg-slate-950 text-slate-100 antialiased">
-        {children}
-      </body>
+      <body className="bg-slate-950 text-slate-100 antialiased">{children}</body>
     </html>
   );
 }
