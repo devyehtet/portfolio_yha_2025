@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
 
         {/* Meta Pixel */}
-        {PIXEL_ID ? (
+       {PIXEL_ID ? (
           <>
             <Script
               id="meta-pixel"
