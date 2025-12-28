@@ -37,8 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
 
         {/* Meta Pixel */}
-       {PIXEL_ID ? (
-          <>
+       
             <Script
               id="meta-pixel"
               strategy="afterInteractive"
@@ -56,19 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   fbq('track', 'PageView');
                 `,
               }}
-            />
-            <noscript>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                height="1"
-                width="1"
-                style={{ display: "none" }}
-                src={`https://www.facebook.com/tr?id=${PIXEL_ID}&ev=PageView&noscript=1`}
-                alt=""
-              />
-            </noscript>
-          </>
-        ) : null}
+         
       </head>
 
       <body className="bg-slate-950 text-slate-100 antialiased">{children}</body>
