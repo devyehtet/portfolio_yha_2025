@@ -42,6 +42,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ) : null}
 
         {/* Meta Pixel */}
+
+        <meta name="pixel-debug" content="pixel-enabled" />
+
         {PIXEL_ID ? (
           <>
             <Script id="meta-pixel" strategy="afterInteractive">
