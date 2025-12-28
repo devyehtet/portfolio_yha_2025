@@ -9,50 +9,37 @@ export const metadata: Metadata = {
     "Digital Marketing Manager & Performance Marketing Expert specializing in SEO, PPC, Social Media, and Data-Driven Campaign Optimization.",
 };
 
-const GA_ID = "G-9BH46V9VMG";
-const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID; // ✅ from env
+// ✅ Put these in .env (recommended)
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "G-9BH46V9VMG";
+const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || ""; // ex: 928969039556719
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-
-        {/*Event snippet for Contact conversion page */ } 
-<script>
-  gtag('event', 'conversion', {'send_to': 'AW-17352985815/AUcnCL_SstgbENeZxtJA'});
-</script>
-
-
-{/* Event snippet for Page view (2) conversion page */}
-<script>
-  gtag('event', 'conversion', {'send_to': 'AW-17352985815/VWLbCMLSstgbENeZxtJA'});
-</script>
-
-
-
-        {/* Google Analytics (GA4) */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-script" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_ID}');
-          `}
-        </Script>
-
-        {/* Domain verification */}
+        {/* Facebook Domain Verification */}
         <meta
           name="facebook-domain-verification"
           content="pn466ibwvkay4x78bj4l80legtjhej"
         />
+
+        {/* GA4 */}
+        {GA_ID ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}', { send_page_view: true });
+              `}
+            </Script>
+          </>
+        ) : null}
 
         {/* Meta Pixel */}
         {PIXEL_ID ? (
@@ -73,6 +60,7 @@ export default function RootLayout({
             </Script>
 
             <noscript>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 height="1"
                 width="1"
@@ -85,7 +73,9 @@ export default function RootLayout({
         ) : null}
       </head>
 
-      <body className="bg-slate-950 text-slate-100 antialiased">{children}</body>
+      <body className="bg-slate-950 text-slate-100 antialiased">
+        {children}
+      </body>
     </html>
   );
 }
