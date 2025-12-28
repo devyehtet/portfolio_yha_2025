@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Ye Htet Aung | Digital Marketing Manager",
@@ -45,6 +46,7 @@ export default function RootLayout({
 
         <body className="bg-slate-950 text-slate-100 antialiased">
     {children}
+    <Analytics />
 
     {PIXEL_ID ? (
       <>
