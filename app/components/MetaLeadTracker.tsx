@@ -4,11 +4,12 @@ import { getFbp, getFbc, newEventId } from "@/lib/meta";
 
 declare global {
   interface Window {
-    fbq?: (...args: any[]) => void;
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
 export async function sendLeadEvent(params: {
+  contentName?: string;
   email?: string;
   phone?: string;
   url?: string;
@@ -33,7 +34,7 @@ export async function sendLeadEvent(params: {
       fbp: getFbp(),
       fbc: getFbc(),
       custom_data: {
-        content_name: "Contact Form",
+        content_name: params.contentName || "Contact Form",
       },
     }),
   });

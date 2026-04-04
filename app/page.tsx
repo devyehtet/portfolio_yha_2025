@@ -2,7 +2,11 @@
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
-import { sendLeadEvent } from "./components/MetaLeadTracker";
+import Link from "next/link";
+import {
+  mediaPlanBlocks,
+  mediaPlanHighlights,
+} from "@/lib/media-plan-template";
 
 /* ---------------------------------------
    NAVIGATION ITEMS
@@ -10,6 +14,7 @@ import { sendLeadEvent } from "./components/MetaLeadTracker";
 const navItems = [
   { label: "About", id: "about" },
   { label: "Services", id: "services" },
+  { label: "Template", id: "template" },
   { label: "Skills", id: "skills" },
   { label: "Experience", id: "experience" },
   { label: "Education", id: "education" },
@@ -231,7 +236,7 @@ export default function HomePage() {
         body: JSON.stringify(form),
       });
 
-      let data: any = null;
+      let data: { error?: string } | null = null;
       try {
         data = await res.json();
       } catch {
@@ -414,6 +419,78 @@ export default function HomePage() {
                 <p className="text-[11px] text-slate-400">
                   {service.tools.join(", ")}
                 </p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* MEDIA PLAN TEMPLATE */}
+        <section id="template" className="space-y-6">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div className="space-y-3">
+              <p className="text-xs uppercase tracking-[0.25em] text-sky-300">
+                Media Plan Template
+              </p>
+              <h2 className="text-2xl font-semibold">
+                Request the planning sheet before launch
+              </h2>
+              <p className="max-w-3xl text-sm leading-7 text-slate-300">
+                I use this template to structure business goals, audience logic,
+                channel roles, KPI targets, and budget planning in one Google
+                Sheet workflow. Visitors request access first, then I manually
+                share the sheet after review.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/media-plan-template"
+                className="rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-slate-900 transition hover:bg-sky-400"
+              >
+                View Template
+              </Link>
+              <Link
+                href="/media-plan-template#request-form"
+                className="rounded-full border border-slate-700 px-5 py-2 text-sm font-semibold text-slate-100 transition hover:border-sky-400 hover:text-sky-200"
+              >
+                Request Access
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {mediaPlanHighlights.map((item) => (
+              <div
+                key={item.label}
+                className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4"
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-300">
+                  {item.label}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-slate-300">
+                  {item.value}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {mediaPlanBlocks.map((block) => (
+              <article
+                key={block.title}
+                className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4"
+              >
+                <h3 className="text-sm font-semibold text-slate-100">
+                  {block.title}
+                </h3>
+                <p className="mt-2 text-xs leading-6 text-slate-300">
+                  {block.description}
+                </p>
+                <ul className="mt-3 space-y-1 text-xs text-slate-400">
+                  {block.fields.map((field) => (
+                    <li key={field}>• {field}</li>
+                  ))}
+                </ul>
               </article>
             ))}
           </div>

@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   title: "Ye Htet Aung | Digital Marketing Manager",
   description:
     "Digital Marketing Manager & Performance Marketing Expert specializing in SEO, PPC, Social Media, and Data-Driven Campaign Optimization.",
+  metadataBase: new URL("https://yehtet.com"),
+  alternates: {
+    canonical: "/",
+  },
 };
 
 const GA_ID = "G-9BH46V9VMG";

@@ -9,6 +9,37 @@ function sha256(str: string) {
   return crypto.createHash("sha256").update(str).digest("hex");
 }
 
+type MetaCapiRequestBody = {
+  custom_data?: Record<string, unknown>;
+  email?: string;
+  event_id?: string;
+  event_name?: string;
+  fbc?: string;
+  fbp?: string;
+  phone?: string;
+  url?: string;
+};
+
+type MetaCapiPayload = {
+  data: Array<{
+    action_source: string;
+    custom_data?: Record<string, unknown>;
+    event_id?: string;
+    event_name: string;
+    event_source_url?: string;
+    event_time: number;
+    user_data: {
+      client_ip_address?: string;
+      client_user_agent?: string;
+      em?: string[];
+      fbc?: string;
+      fbp?: string;
+      ph?: string[];
+    };
+  }>;
+  test_event_code?: string;
+};
+
 export async function POST(req: Request) {
   try {
     const PIXEL_ID = process.env.META_PIXEL_ID;
@@ -30,7 +61,7 @@ export async function POST(req: Request) {
 
     const userAgent = h.get("user-agent") ?? undefined;
 
-    const body = await req.json();
+    const body = (await req.json()) as MetaCapiRequestBody;
 
     const event_name: string = body.event_name || "PageView";
     const event_id: string | undefined = body.event_id;
@@ -42,7 +73,7 @@ export async function POST(req: Request) {
     const fbp: string | undefined = body.fbp;
     const fbc: string | undefined = body.fbc;
 
-    const user_data: any = {
+    const user_data: MetaCapiPayload["data"][number]["user_data"] = {
       client_user_agent: userAgent,
       client_ip_address: ip,
     };
@@ -55,7 +86,7 @@ export async function POST(req: Request) {
     if (fbp) user_data.fbp = fbp;
     if (fbc) user_data.fbc = fbc;
 
-    const payload: any = {
+    const payload: MetaCapiPayload = {
       data: [
         {
           event_name,
@@ -81,7 +112,7 @@ export async function POST(req: Request) {
       }
     );
 
-    const result = await res.json();
+    const result = (await res.json()) as unknown;
 
     if (!res.ok) {
       return NextResponse.json(
@@ -91,7 +122,9 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ ok: true, meta: result });
-  } catch (e: any) {
-    return NextResponse.json({ ok: false, error: e.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error ? error.message : "Unexpected Meta CAPI error";
+    return NextResponse.json({ ok: false, error: message }, { status: 500 });
   }
 }
