@@ -1,0 +1,16 @@
+<svg width="520" height="220" viewBox="0 0 520 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="520" height="220" rx="28" fill="#F8FAFC"/>
+  <text
+    x="260"
+    y="150"
+    text-anchor="middle"
+    fill="#4A63F3"
+    font-family="Arial Rounded MT Bold, Arial, Helvetica, sans-serif"
+    font-size="118"
+    font-weight="700"
+    letter-spacing="1.5"
+  >
+    vivo
+  </text>
+  <rect x="231" y="43" width="19" height="19" rx="4" transform="rotate(45 231 43)" fill="#4A63F3"/>
+</svg>

@@ -1,0 +1,17 @@
+<svg width="520" height="240" viewBox="0 0 520 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="520" height="240" fill="#F8FAFC"/>
+  <path d="M12 109H168" stroke="#020617" stroke-width="7" stroke-linecap="round"/>
+  <path d="M352 109H508" stroke="#020617" stroke-width="7" stroke-linecap="round"/>
+  <path d="M16 184H504" stroke="#020617" stroke-width="7" stroke-linecap="round"/>
+  <path d="M277.064 40.1877C288.765 49.4528 293.552 59.1522 291.424 68.5302C288.651 80.7415 276.874 84.1181 273.829 98.4661C272.509 104.683 273.367 111.195 276.569 118" stroke="#020617" stroke-width="7" stroke-linecap="round"/>
+  <path d="M217 94.3147C236.973 86.2551 259.676 82.6176 284.031 83.1588C304.5 83.6135 325.051 86.9497 345.683 93.1673" stroke="#020617" stroke-width="7" stroke-linecap="round"/>
+  <path d="M206 102.491C233.552 111.873 265.825 115.977 302.819 114.803C330.365 113.929 357.426 109.885 384 102.67" stroke="#020617" stroke-width="7" stroke-linecap="round"/>
+  <path d="M194 110.933C225.802 123.84 264.257 129.231 309.364 126.282C341.874 124.158 373.086 119.093 403 111.086" stroke="#020617" stroke-width="7" stroke-linecap="round"/>
+  <text x="28" y="170" fill="#020617" font-family="Arial, Helvetica, sans-serif" font-size="92" font-weight="900" letter-spacing="1.5">
+    PREMIER
+  </text>
+  <circle cx="490" cy="135" r="18" stroke="#020617" stroke-width="6"/>
+  <text x="481.5" y="145" fill="#020617" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">
+    R
+  </text>
+</svg>
