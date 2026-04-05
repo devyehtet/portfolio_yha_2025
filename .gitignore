@@ -32,6 +32,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+<<<<<<< HEAD
+=======
+!.env.example
+>>>>>>> fc7159b553d499fdee10e68e6e8e0c50516e358d
 
 # vercel
 .vercel

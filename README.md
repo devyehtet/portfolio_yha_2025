@@ -20,6 +20,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+<<<<<<< HEAD
 ## Environment
 
 Copy `.env.example` to `.env.local` and fill in your SMTP and Meta values before testing the contact form or Meta Conversions API:
@@ -28,6 +29,8 @@ Copy `.env.example` to `.env.local` and fill in your SMTP and Meta values before
 cp .env.example .env.local
 ```
 
+=======
+>>>>>>> fc7159b553d499fdee10e68e6e8e0c50516e358d
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
