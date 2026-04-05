@@ -3,13 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-<<<<<<< HEAD
     "dev": "NODE_OPTIONS='--require ./scripts/suppress-baseline-warning.cjs' BROWSERSLIST_IGNORE_OLD_DATA=true next dev",
     "build": "NODE_OPTIONS='--require ./scripts/suppress-baseline-warning.cjs' BROWSERSLIST_IGNORE_OLD_DATA=true next build",
-=======
-    "dev": "next dev",
-    "build": "next build",
->>>>>>> fc7159b553d499fdee10e68e6e8e0c50516e358d
     "start": "next start",
     "lint": "eslint"
   },
@@ -27,10 +22,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.22",
-<<<<<<< HEAD
     "baseline-browser-mapping": "^2.10.14",
-=======
->>>>>>> fc7159b553d499fdee10e68e6e8e0c50516e358d
     "eslint": "^9",
     "eslint-config-next": "16.0.8",
     "tailwindcss": "^4",

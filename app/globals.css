@@ -1,6 +1,4 @@
 @import "tailwindcss";
-
-<<<<<<< HEAD
 html {
   scroll-behavior: smooth;
 }
@@ -737,9 +735,4 @@ body::before {
     opacity: 1;
     transform: none;
   }
-=======
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Segoe UI", sans-serif;
->>>>>>> fc7159b553d499fdee10e68e6e8e0c50516e358d
 }
